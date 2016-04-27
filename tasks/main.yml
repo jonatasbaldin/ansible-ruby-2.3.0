@@ -1,0 +1,43 @@
+---
+- name: Install dependencies
+  apt: name={{ item }} state=present update_cache=yes
+  with_items:
+  - curl 
+  - zlib1g-dev 
+  - build-essential 
+  - libssl-dev 
+  - libreadline-dev 
+  - libyaml-dev 
+  - libsqlite3-dev 
+  - libxml2-dev 
+  - libxslt1-dev 
+  - libcurl4-openssl-dev 
+  - python-software-properties 
+  - libffi-dev 
+  - nodejs
+
+- name: Download Ruby-2.3.0
+  get_url: url=https://cache.ruby-lang.org/pub/ruby/2.3/ruby-2.3.0.tar.gz dest=/usr/src
+
+- name: Extract Ruby-2.3.0
+  unarchive: src=/usr/src/ruby-2.3.0.tar.gz dest=/usr/src/ copy=no
+
+- name: Create Ruby-2.3.0 directory
+  file: path={{ ruby_230_dir }} state=directory
+
+- name: Compile Ruby-2.3.0
+  shell: ./configure {{ ruby_230_compile_options }}
+  args:
+    chdir: /usr/src/ruby-2.3.0
+    creates: "{{ ruby_230_dir }}/bin/ruby"
+
+- name: Create symbolic links
+  file: src={{ ruby_230_dir }}/bin/{{ item.src }} dest=/usr/bin/{{ item.dest }} state=link
+  with_items:
+    - { src: 'erb',  dest: 'erb-2.3.0' }
+    - { src: 'gem',  dest: 'gem-2.3.0' }
+    - { src: 'irb',  dest: 'irb-2.3.0' }
+    - { src: 'rake', dest: 'rake-2.3.0' }
+    - { src: 'rdoc', dest: 'rdoc-2.3.0' }
+    - { src: 'ri',   dest: 'ri-2.3.0' }
+    - { src: 'ruby', dest: 'ruby-2.3.0' }

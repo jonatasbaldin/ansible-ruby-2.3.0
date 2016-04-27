@@ -1,0 +1,3 @@
+---
+ruby_230_dir: /usr/local/ruby-2.3.0
+ruby_230_compile_options: --prefix={{ ruby_230_dir }} --disable-install-rdoc && make && make install

@@ -1,0 +1,19 @@
+galaxy_info:
+  author: Jonatas Baldin
+  description: Installs Ruby-2.3.0.
+  company: deployeveryday.com
+  
+  license: MIT
+  
+  min_ansible_version: 2.0
+
+  platforms:
+  - name: Ubuntu
+    versions:
+    - trusty
+
+  galaxy_tags:
+    - ruby
+    - development
+
+dependencies: []

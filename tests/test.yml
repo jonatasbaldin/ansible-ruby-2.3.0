@@ -1,0 +1,5 @@
+---
+- hosts: ruby
+  become: yes
+  roles:
+    - jonatasbaldin.ruby-2.3.0
